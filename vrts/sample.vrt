@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<OGRVRTDataSource>
+  <OGRVRTLayer name="pr_n_projetsindustriels">
+    <SrcDataSource>https://www.data.gouv.fr/fr/datasets/r/b5536fc9-eb1c-421f-bf73-fedad9508409</SrcDataSource>
+    <SrcLayer>b5536fc9-eb1c-421f-bf73-fedad9508409</SrcLayer>
+    <SrcSQL>SELECT * FROM "b5536fc9-eb1c-421f-bf73-fedad9508409"</SrcSQL>
+    <Field name="nom_entreprise" src="entreprise" type="String"/>
+    <Field name="type_entreprise" src="type_entreprise" type="String"/>
+    <Field name="siren_entreprise" src="siren" type="String"/>
+  </OGRVRTLayer>
+</OGRVRTDataSource>

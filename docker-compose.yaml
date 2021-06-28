@@ -1,0 +1,23 @@
+version: "3.1"
+
+services:
+  database:
+    image: georchestra/database:latest
+    environment:
+      - POSTGRES_USER=georchestra
+      - POSTGRES_PASSWORD=georchestra
+    restart: always
+  vrt-bot:
+    build: ./
+    image: georchestra/vrt-bot:latest
+    environment:
+      PGHOST: database
+      PGPORT: 5432
+      PGUSER: georchestra
+      PGDATABASE: georchestra
+      PGCLIENTENCODING: utf8
+      PGPASSWORD: georchestra
+      ACTIVESCHEMA: public
+      SOURCEDIR: /home/app/vrts
+    depends_on:
+    - database
