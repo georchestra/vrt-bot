@@ -1,0 +1,24 @@
+name: build a docker image
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+    - name: "Checking out"
+      uses: actions/checkout@v1
+
+    - name: "Building docker image"
+      run: docker-compose build
+      
+    - name: "Logging in to docker.io"
+      uses: azure/docker-login@v1
+      with:
+        username: '${{ secrets.DOCKER_HUB_USERNAME }}'
+        password: '${{ secrets.DOCKER_HUB_PASSWORD }}'
+
+    - name: "Pushing latest to docker.io"
+      run: docker-compose push
