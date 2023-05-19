@@ -37,7 +37,7 @@ DATE=$(date "+%A %d/%m/%Y %H:%M:%S")
             /usr/bin/ogr2ogr \
                 -f Postgresql \
                 -overwrite \
-                PG:"active_schema=${ACTIVESCHEMA}" "${vrt}" -lco GEOMETRY_NAME=geometry -nlt PROMOTE_TO_MULTI  -lco DESCRIPTION="import par ${JOB_NAME}/${BUILD_NUMBER} le ${DATE} - ${SOURCEDIR}/${vrt}"
+                PG:"active_schema=${ACTIVESCHEMA}" "${vrt}" -lco OVERWRITE=yes -lco GEOMETRY_NAME=geometry -nlt PROMOTE_TO_MULTI  -lco DESCRIPTION="import par ${JOB_NAME}/${BUILD_NUMBER} le ${DATE} - ${SOURCEDIR}/${vrt}"
             # post import sql
             if [ -f "${vrt}.sql" ]; then
                 echo "script sql après import trouvé"
