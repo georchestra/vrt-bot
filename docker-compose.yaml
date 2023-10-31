@@ -19,5 +19,7 @@ services:
       PGPASSWORD: georchestra
       ACTIVESCHEMA: public
       SOURCEDIR: /home/app/vrts
+    volumes:
+      - ./vrts:/home/app/vrts
     depends_on:
     - database
