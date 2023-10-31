@@ -2,10 +2,17 @@ version: "3.1"
 
 services:
   database:
-    image: georchestra/database:latest
+    image: postgis/postgis:latest
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-d",  "georchestra", "-U", "georchestra", "-h", "0.0.0.0", "-p", "5432" ]
+      interval: 2s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     environment:
       - POSTGRES_USER=georchestra
       - POSTGRES_PASSWORD=georchestra
+      - POSTGRES_DB=georchestra
     restart: always
   vrt-bot:
     build: ./
@@ -19,5 +26,8 @@ services:
       PGPASSWORD: georchestra
       ACTIVESCHEMA: public
       SOURCEDIR: /home/app/vrts
+    volumes:
+      - ./vrts:/home/app/vrts
     depends_on:
-    - database
+      database:
+        condition: service_healthy
