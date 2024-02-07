@@ -31,4 +31,4 @@ jobs:
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
         repository: georchestra/vrt-bot
         readme-filepath: ./DOCKER_HUB.md
-        short-description: 'VRT bot module for geOrchestra SDI'
+        short-description: 'VRT bot module for the geOrchestra SDI'
