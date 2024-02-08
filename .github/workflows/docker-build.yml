@@ -22,3 +22,13 @@ jobs:
 
     - name: "Pushing latest to docker.io"
       run: docker-compose push
+
+    - name: "Update Docker Hub Description for VRT bot"
+      if: github.ref == 'refs/heads/main' && github.repository == 'georchestra/vrt-bot' && github.actor != 'dependabot[bot]' && github.event_name != 'pull_request'
+      uses: peter-evans/dockerhub-description@v3
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        repository: georchestra/vrt-bot
+        readme-filepath: ./DOCKER_HUB.md
+        short-description: 'VRT bot module for the geOrchestra SDI'
