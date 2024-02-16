@@ -24,8 +24,7 @@ set -e
 # horodatage pour commentaires
 DATE=$(date "+%A %d/%m/%Y %H:%M:%S")
 
-rm -f ${SOURCEDIR}/vrtbot.log
-touch ${SOURCEDIR}/vrtbot.log
+
 
    if [ -n "$(ls -A $SOURCEDIR 2>/dev/null)" ]
    then
@@ -34,21 +33,21 @@ touch ${SOURCEDIR}/vrtbot.log
         # cycle vrt
         for vrt in *.vrt;
         do
-            echo "import de ${SOURCEDIR}/${vrt} dans le schema ${ACTIVESCHEMA} de la base ${PGDATABASE}" | tee -a vrtbot.log
+            echo "import de ${SOURCEDIR}/${vrt} dans le schema ${ACTIVESCHEMA} de la base ${PGDATABASE}"
             /usr/bin/ogr2ogr \
                 -f Postgresql \
                 -overwrite \
-                PG:"active_schema=${ACTIVESCHEMA}" "${vrt}" -lco SCHEMA=${ACTIVESCHEMA} -lco OVERWRITE=yes -lco GEOMETRY_NAME=geometry -nlt PROMOTE_TO_MULTI  -lco DESCRIPTION="import par ${JOB_NAME}/${BUILD_NUMBER} le ${DATE} - ${SOURCEDIR}/${vrt}" 2>&1 | tee -a vrtbot.log
+                PG:"active_schema=${ACTIVESCHEMA}" "${vrt}" -lco SCHEMA=${ACTIVESCHEMA} -lco OVERWRITE=yes -lco GEOMETRY_NAME=geometry -nlt PROMOTE_TO_MULTI  -lco DESCRIPTION="import par ${JOB_NAME}/${BUILD_NUMBER} le ${DATE} - ${SOURCEDIR}/${vrt}"
             # post import sql
             if [ -f "${vrt}.sql" ]; then
-                echo "script sql après import trouvé" | tee -a vrtbot.log
+                echo "script sql après import trouvé"
                 source "settings"
-                psql -f "${vrt}.sql" | tee -a vrtbot.log
-                echo "script sql après import exécuté" | tee -a vrtbot.log
+                psql -f "${vrt}.sql"
+                echo "script sql après import exécuté"
 
             fi
         done
 
     else
-        echo "${SOURCEDIR} n'existe pas" | tee -a vrtbot.log
+        echo "${SOURCEDIR} n'existe pas"
     fi
