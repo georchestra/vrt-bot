@@ -32,8 +32,8 @@ touch ${SOURCEDIR}/vrtbot.log
         cd "${SOURCEDIR}"
 
         params=()
-        if [[ ${ACTIVATE_GEOMETRY_TYPE:-true} == true ]]; then
-            params=(-nlt PROMOTE_TO_MULTI)
+        if [[ ${PROMOTE_TO_MULTI:-true} == true ]]; then
+            params+=(-nlt PROMOTE_TO_MULTI)
         fi
         # cycle vrt
         for vrt in *.vrt;

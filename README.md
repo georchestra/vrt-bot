@@ -47,8 +47,15 @@ with the previous variables defined.
 The following environment variables are optional:
 
 ```
-# export ACTIVATE_GEOMETRY_TYPE=false 
-True by default
+/**
+* PROMOTE_TO_MULTI can be used to automatically promote layers that mix polygon or multipolygons to multipolygons, 
+* and layers that mix linestrings or multilinestrings to multilinestrings. 
+* Can be useful when converting shapefiles to PostGIS 
+* and other target drivers that implement strict checks for geometry types
+*
+* Enabled by default
+**/
+# export PROMOTE_TO_MULTI=false 
 ```
 
 
