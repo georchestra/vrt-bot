@@ -42,6 +42,16 @@ The `vrt.sh` script is meant to be called regularly via a Cronjob (every 5 hours
 or more, as the datasets will be downloaded and published again at each run),
 with the previous variables defined.
 
+## Optional variables
+
+The following environment variables are optional:
+
+```
+# export ACTIVATE_GEOMETRY_TYPE=false 
+True by default
+```
+
+
 # Docker
 
 The provided `Dockerfile` is meant to build the `vrt-bot` image, and a build can be

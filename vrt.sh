@@ -31,6 +31,10 @@ touch ${SOURCEDIR}/vrtbot.log
    then
         cd "${SOURCEDIR}"
 
+        params=()
+        if [[ ${ACTIVATE_GEOMETRY_TYPE:-true} == true ]]; then
+            params=(-nlt PROMOTE_TO_MULTI)
+        fi
         # cycle vrt
         for vrt in *.vrt;
         do
@@ -38,7 +42,7 @@ touch ${SOURCEDIR}/vrtbot.log
             /usr/bin/ogr2ogr \
                 -f Postgresql \
                 -overwrite \
-                PG:"active_schema=${ACTIVESCHEMA}" "${vrt}" -lco SCHEMA=${ACTIVESCHEMA} -lco OVERWRITE=yes -lco GEOMETRY_NAME=geometry -nlt PROMOTE_TO_MULTI  -lco DESCRIPTION="import par ${JOB_NAME}/${BUILD_NUMBER} le ${DATE} - ${SOURCEDIR}/${vrt}" 2>&1 | tee -a vrtbot.log
+                PG:"active_schema=${ACTIVESCHEMA}" "${vrt}" -lco SCHEMA=${ACTIVESCHEMA} -lco OVERWRITE=yes -lco GEOMETRY_NAME=geometry "${params[@]}" -lco DESCRIPTION="import par ${JOB_NAME}/${BUILD_NUMBER} le ${DATE} - ${SOURCEDIR}/${vrt}" 2>&1 | tee -a vrtbot.log
             # post import sql
             if [ -f "${vrt}.sql" ]; then
                 echo "script sql après import trouvé" | tee -a vrtbot.log
