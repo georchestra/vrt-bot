@@ -8,20 +8,30 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
-    - name: "Checking out"
-      uses: actions/checkout@v1
+    - name: Check Out Repo
+      uses: actions/checkout@v3
 
-    - name: "Building docker image"
-      run: docker-compose build
-      
-    - name: "Logging in to docker.io"
-      uses: azure/docker-login@v1
+    - name: Login to ghcr.io
+      uses: docker/login-action@v2
       with:
         username: '${{ secrets.DOCKER_HUB_USERNAME }}'
         password: '${{ secrets.DOCKER_HUB_PASSWORD }}'
 
-    - name: "Pushing latest to docker.io"
-      run: docker-compose push
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v2
+      with:
+        version: latest
+
+    - name: Build and push docker image
+      id: docker_build
+      uses: docker/build-push-action@v3
+      with:
+        context: ./
+        file: ./Dockerfile
+        platforms: linux/amd64
+        push: true
+        tags: georchestra/vrt-bot:latest, georchestra/vrt-bot:build-${{ github.sha }}
 
     - name: "Update Docker Hub Description for VRT bot"
       if: github.ref == 'refs/heads/main' && github.repository == 'georchestra/vrt-bot' && github.actor != 'dependabot[bot]' && github.event_name != 'pull_request'
