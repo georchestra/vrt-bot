@@ -21,6 +21,7 @@ See the `vrts/sample.vrt` file for an example:
   </OGRVRTLayer>
 </OGRVRTDataSource>
 ```
+More examples on eg. https://github.com/geo2france/vrt
 
 # Configuration via environment variables
 
