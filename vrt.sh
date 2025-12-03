@@ -51,7 +51,7 @@ touch ${SOURCEDIR}/vrtbot.log
                 psql -f "${vrt}.sql" | tee -a vrtbot.log
                 echo "script sql après import exécuté" | tee -a vrtbot.log
             fi
-            rm /tmp/$vrt
+            rm -f /tmp/$vrt
         done
 
     else
