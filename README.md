@@ -43,6 +43,7 @@ The `vrt.sh` script is meant to be called regularly via a Cronjob (every 5 hours
 or more, as the datasets will be downloaded and published again at each run),
 with the previous variables defined.
 
+The `vrt.sh` script support env variable in the vrt file, as it is using envsubt.
 ## Optional variables
 
 The following environment variables are optional:

@@ -38,19 +38,20 @@ touch ${SOURCEDIR}/vrtbot.log
         # cycle vrt
         for vrt in *.vrt;
         do
-            echo "import de ${SOURCEDIR}/${vrt} dans le schema ${ACTIVESCHEMA} de la base ${PGDATABASE}" | tee -a vrtbot.log
+            cat $vrt | envsubst > /tmp/$vrt
+            echo "import de ${SOURCEDIR}/${vrt} (/tmp/${vrt}) dans le schema ${ACTIVESCHEMA} de la base ${PGDATABASE}" | tee -a vrtbot.log
             /usr/bin/ogr2ogr \
                 -f Postgresql \
                 -overwrite \
-                PG:"active_schema=${ACTIVESCHEMA}" "${vrt}" -lco SCHEMA=${ACTIVESCHEMA} -lco OVERWRITE=yes -lco GEOMETRY_NAME=geometry "${params[@]}" -lco DESCRIPTION="import par ${JOB_NAME}/${BUILD_NUMBER} le ${DATE} - ${SOURCEDIR}/${vrt}" 2>&1 | tee -a vrtbot.log
+                PG:"active_schema=${ACTIVESCHEMA}" "/tmp/${vrt}" -lco SCHEMA=${ACTIVESCHEMA} -lco OVERWRITE=yes -lco GEOMETRY_NAME=geometry "${params[@]}" -lco DESCRIPTION="import par ${JOB_NAME}/${BUILD_NUMBER} le ${DATE} - /tmp/${vrt}" 2>&1 | tee -a vrtbot.log
             # post import sql
             if [ -f "${vrt}.sql" ]; then
                 echo "script sql après import trouvé" | tee -a vrtbot.log
                 source "settings"
                 psql -f "${vrt}.sql" | tee -a vrtbot.log
                 echo "script sql après import exécuté" | tee -a vrtbot.log
-
             fi
+            rm -f /tmp/$vrt
         done
 
     else
