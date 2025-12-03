@@ -16,7 +16,7 @@ RUN useradd -u 999 app && mkdir -p /home/app && chown -R app:app /home/app
 COPY --chown=app:app vrt.sh /home/app/vrt.sh
 COPY --chown=app:app vrts /home/app/vrts
 
-RUN apt update && apt install -y gdal-bin && apt clean && \
+RUN apt update && apt install -y gdal-bin gettext && apt clean && \
     rm -rf /var/lib/apt/lists/*
 
 USER app
