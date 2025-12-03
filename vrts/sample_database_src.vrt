@@ -1,0 +1,20 @@
+<!--
+Sample on how to read a database table in order to store it with vrt
+it can be a remote database
+support of env vars, it make it more secure (no credentials in vrt files)
+It reads 2 tables "comptage" and "meteo"
+-->
+<?xml version="1.0"?>
+<OGRVRTDataSource>
+    <OGRVRTLayer name="comptage">
+        <SrcDataSource>PG:host=$PGHOST port=$PGPORT user=$PGUSER dbname=$PGDATABASE password=$PGPASSWORD</SrcDataSource>
+        <SrcLayer>comptage</SrcLayer>
+        <SrcSQL>SELECT * FROM public."comptage"</SrcSQL>
+    </OGRVRTLayer>
+    <OGRVRTLayer name="meteo">
+        <SrcDataSource>PG:host=$PGHOST port=$PGPORT user=$PGUSER dbname=$PGDATABASE password=$PGPASSWORD</SrcDataSource>
+        <SrcLayer>meteo</SrcLayer>
+        <SrcSQL>SELECT * FROM public."meteo"</SrcSQL>
+    </OGRVRTLayer>
+</OGRVRTDataSource>
+
