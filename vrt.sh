@@ -26,7 +26,6 @@ DATE=$(date "+%A %d/%m/%Y %H:%M:%S")
 
 rm -f ${SOURCEDIR}/vrtbot.log
 touch ${SOURCEDIR}/vrtbot.log
-mkdir -p /tmp/${SOURCEDIR}
 
    if [ -n "$(ls -A $SOURCEDIR 2>/dev/null)" ]
    then
